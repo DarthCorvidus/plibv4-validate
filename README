@@ -1,0 +1,11 @@
+phlibv4/Validate
+
+The core of Validate is a simple interface which is supposed to accept a string
+from an untrusted source, ie CLI parameter, $_GET, config file etc. pp., whereas
+"untrusted" not necessarily means "bad", but being prone to user error.
+Validate is not expected to give a return value, but throw an Exception if a
+value does not validate.
+
+The idea is to use Validate within other classes instead of other solutions
+such as callbacks, anonymous functions or in situ regexing.
+
