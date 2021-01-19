@@ -15,6 +15,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ValidateDateTest extends TestCase {
 	/**
+	 * If an invalid format is rejected.
+	 */
+	public function testConstructInvalidFormat() {
+		$this->expectException(InvalidArgumentException::class);
+		$validate = new ValidateDate(-1);
+	}
+	/**
 	 * If StringToArray is able to turn an ISO string into an Array.
 	 */
 	public function testStringToArrayISO() {

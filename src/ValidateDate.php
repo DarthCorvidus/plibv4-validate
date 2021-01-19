@@ -38,6 +38,7 @@ class ValidateDate implements Validate {
 	 * @param int $format class constant designating format
 	 */
 	function __construct(int $format) {
+		Assert::isClassConstant(get_class(), $format, "format");
 		$this->id = $format;
 		if($format == self::ISO) {
 			$this->regex = "/^[0-9]+-[0-9]{1,2}-[0-9]{1,2}$/";

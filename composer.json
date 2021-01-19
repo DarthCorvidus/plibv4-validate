@@ -1,0 +1,17 @@
+{
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/DarthCorvidus/plibv4-assert"
+		}
+	],
+	"name": "plibv4/validate",
+	"require": {
+			"plibv4/assert": "dev-main"
+	},
+	"autoload": {
+        "classmap": ["src/"]
+    }
+
+}

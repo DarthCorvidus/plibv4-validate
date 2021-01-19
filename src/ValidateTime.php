@@ -19,6 +19,7 @@ class ValidateTime implements Validate {
 	 * @param int $limit Whether validation allows only values up to one day or more.
 	 */
 	function __construct(int $limit=self::DAY) {
+		Assert::isClassConstant(get_class(), $limit, "limit");
 		$this->limit = $limit;
 	}
 	

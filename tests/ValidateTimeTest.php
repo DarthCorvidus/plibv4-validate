@@ -13,6 +13,14 @@ use PHPUnit\Framework\TestCase;
  * @author hm
  */
 class ValidateTimeTest extends TestCase {
+	/**
+	 * If an invalid limit is rejected
+	 */
+	public function testConstructInvalidFormat() {
+		$this->expectException(InvalidArgumentException::class);
+		$validate = new ValidateTime(-1);
+	}
+
 	public function testValidateStrict() {
 		$validate = new ValidateTime();
 		$this->assertEquals(NULL, $validate->validate("05:37:01"));
