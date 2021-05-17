@@ -42,7 +42,7 @@ class ValidateTime implements Validate {
 			$this->validateSemantics($validee);
 		return;
 		}
-	throw new ValidateException();
+	throw new ValidateException("invalid format, time expected (HH:MM:SS)");
 	}
 	
 	/**
