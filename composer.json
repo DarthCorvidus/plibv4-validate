@@ -3,7 +3,8 @@
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "https://github.com/DarthCorvidus/plibv4-assert"
+			"url": "https://github.com/DarthCorvidus/plibv4-assert",
+			"no-api": true
 		}
 	],
 	"name": "plibv4/validate",
