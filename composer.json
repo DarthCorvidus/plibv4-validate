@@ -9,14 +9,14 @@
 	],
 	"name": "plibv4/validate",
 	"require": {
-			"plibv4/assert": "dev-main"
+		"plibv4/assert": "dev-main"
 	},
 	"autoload": {
         "classmap": ["src/"]
     },
 	"require-dev": {
-		"vimeo/psalm": "^6.x-dev",
-		"phpunit/phpunit": "^9.6.x-dev"
+		"vimeo/psalm": "^6",
+		"phpunit/phpunit": "^9"
 	},
 	"scripts": {
 		"test": "./vendor/bin/phpunit --bootstrap vendor/autoload.php tests",
@@ -25,7 +25,7 @@
 	},
 	"config": {
 		"platform": {
-			"php": "8.3"
+			"php": "8.2"
 		},
 		"allow-plugins": {
 			"symfony/flex": false
