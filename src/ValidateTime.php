@@ -13,7 +13,7 @@ class ValidateTime implements Validate {
 	/** Restricts values to 23:59:59 */
 	const DAY = 2;
 	/** If length of time value is limited */
-	private $limit = 2;
+	private int $limit = 2;
 	/**
 	 * Constructs ValidateTime.
 	 * @param int $limit Whether validation allows only values up to one day or more.
@@ -29,7 +29,7 @@ class ValidateTime implements Validate {
 	 * @return void
 	 * @throws ValidateException
 	 */
-	function validate(string $validee) {
+	function validate(string $validee): void {
 		if(preg_match("/^[0-9]+$/", $validee)) {
 			$this->validateSemantics($validee);
 		return;
@@ -49,9 +49,10 @@ class ValidateTime implements Validate {
 	 * Validates the semantic content of a string, ie a minute part which is
 	 * higher than 59 minutes.
 	 * @param string $validee
+	 * @return void
 	 * @throws ValidateException
 	 */
-	private function validateSemantics(string $validee) {
+	private function validateSemantics(string $validee): void {
 		$exp = explode(":", $validee);
 		if($exp[0]>23 && $this->limit==self::DAY) {
 			throw new ValidateException("hours out of range");

@@ -27,12 +27,15 @@ class ValidateDate implements Validate {
 	const GERMAN = 1;
 	/** US-style date (MM/DD/YYYY) */
 	const US = 2;
-	/** Regular expression reflecting format */
-	private $regex;
+	/** 
+	 * Regular expression reflecting format
+	 * @var non-empty-string
+	 */
+	private string $regex;
 	/** example of format to include in exception */
-	private $format;
+	private string $format;
 	/** format to be validated against */
-	private $id;
+	private int $id;
 	/**
 	 * Creates ValidateDate.
 	 * @param int $format class constant designating format
@@ -40,10 +43,11 @@ class ValidateDate implements Validate {
 	function __construct(int $format) {
 		Assert::isClassConstant(get_class(), $format, "format");
 		$this->id = $format;
-		if($format == self::ISO) {
-			$this->regex = "/^[0-9]+-[0-9]{1,2}-[0-9]{1,2}$/";
-			$this->format = "YYYY-MM-DD";
-		}
+		/**
+		 * Default to ISO 8601
+		 */
+		$this->regex = "/^[0-9]+-[0-9]{1,2}-[0-9]{1,2}$/";
+		$this->format = "YYYY-MM-DD";
 		if($format == self::GERMAN) {
 			$this->regex = "/^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]+$/";
 			$this->format = "DD.MM.YYYY";
@@ -61,7 +65,7 @@ class ValidateDate implements Validate {
 	 * @return array
 	 */
 	private function stringToArray(string $validee): array {
-		if($this->id==self::ISO) {
+		if($this->id===self::ISO) {
 			$exp = explode("-", $validee);
 		return array($exp[0], $exp[1], $exp[2]);
 		}
@@ -73,7 +77,8 @@ class ValidateDate implements Validate {
 			$exp = explode("/", $validee);
 		return array($exp[2], $exp[0], $exp[1]);
 		}
-
+	// should not trip
+	throw new \RuntimeException("unable to parse ".$validee." into array for format ".$this->id);
 	}
 	/**
 	 * Semantic validation of date as array.
@@ -93,7 +98,12 @@ class ValidateDate implements Validate {
 		if($date[2]<=28) {
 			return;
 		}
-		$ts = strtotime($date[0]."-".$date[1]."-01");
+		$parseMe = (string)$date[0]."-".(string)$date[1]."-01";
+		$ts = strtotime($parseMe);
+		if($ts === false) {
+			// should not happen.
+			throw new \RuntimeException("unable to parse date ".$parseMe);
+		}
 		if(date("t", $ts)<$date[2]) {
 			throw new ValidateException("day is out of range", ValidateDateException::VD_DAY_OOR);
 		}
@@ -106,9 +116,10 @@ class ValidateDate implements Validate {
 	 * 
 	 * Note that validate accepts „sloppy“ formats such as 2020-6-1.
 	 * @param string $validee string containing date
+	 * @return void
 	 * @throws ValidateException
 	 */
-	public function validate(string $validee) {
+	public function validate(string $validee): void {
 		if(!preg_match($this->regex, $validee)) {
 			throw new ValidateException("Invalid format, ".$this->format." expected", ValidateDateException::VD_SYNTAX);
 		}

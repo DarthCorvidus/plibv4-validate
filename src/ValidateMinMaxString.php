@@ -6,16 +6,16 @@
  * @copyright (c) 2023, Claus-Christoph Kuethe
  */
 class ValidateMinMaxString implements Validate {
-	private $min;
-	private $max;
-	private $charset;
+	private int $min;
+	private int $max;
+	private string $charset;
 	function __construct(int $min, int $max, string $charset="UTF-8") {
 		$this->min = $min;
 		$this->max = $max;
 		$this->charset = $charset;
 	}
 	
-	public function validate(string $validee) {
+	public function validate(string $validee): void {
 		if(mb_strlen($validee)<$this->min) {
 			throw new ValidateException(sprintf("value too short, min %d characters.", $this->min));
 		}

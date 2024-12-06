@@ -11,7 +11,7 @@
  * Validate a path, leaving the option to demand a file or a directory.
  */
 class ValidatePath implements Validate {
-	private $type;
+	private int $type;
 	const DIR = 1;
 	const FILE = 2;
 	const BOTH = 3;
@@ -24,7 +24,7 @@ class ValidatePath implements Validate {
 		$this->type = $type;
 	}
 
-	public function validate(string $validee) {
+	public function validate(string $validee): void {
 		if(!file_exists($validee)) {
 			throw new ValidateException("path does not exist.");
 		}

@@ -12,7 +12,7 @@ interface ValidateArray {
 	 * Implementation is supposed to validate an array. ValidateArray must not
 	 * have a return value; if validation fails, a ValidateException has to be
 	 * thrown.
-	 * @param string $validee
+	 * @param array $validee
 	 * @throws ValidateException
 	 */
 	function validateArray(array $validee): void;
