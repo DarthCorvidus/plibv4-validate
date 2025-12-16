@@ -20,7 +20,7 @@ class ValidatePath implements Validate {
 	 * @param int $format directory, file or both
 	 */
 	function __construct(int $type) {
-		Assert::isClassConstant(get_class(), $type, "type");
+		Assert::isClassConstant(self::class, $type, "type");
 		$this->type = $type;
 	}
 

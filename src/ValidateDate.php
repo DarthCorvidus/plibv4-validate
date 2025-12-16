@@ -41,7 +41,7 @@ class ValidateDate implements Validate {
 	 * @param int $format class constant designating format
 	 */
 	function __construct(int $format) {
-		Assert::isClassConstant(get_class(), $format, "format");
+		Assert::isClassConstant(self::class, $format, "format");
 		$this->id = $format;
 		/**
 		 * Default to ISO 8601
