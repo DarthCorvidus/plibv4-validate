@@ -7,7 +7,7 @@
  */
 namespace plibv4\validate;
 
-class ValidateEnum implements Validate {
+final class ValidateEnum implements Validate {
 	/** @var list<string> */
 	private array $enum = array();
 	/**
@@ -18,6 +18,7 @@ class ValidateEnum implements Validate {
 		$this->enum = $enum;
 	}
 	
+	#[\Override]
 	public function validate(string $validee): void {
 		if(!in_array($validee, $this->enum, true)) {
 			/** @psalm-suppress MixedArgumentTypeCoercion */

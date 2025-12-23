@@ -5,11 +5,11 @@ use Assert;
 /**
  * Exception if ValidateDate fails.
  * 
- * Class constants can be used to message cause of failure to catch block.
+ * Class constants can be used to mesfinal sage cause of failure to catch block.
  * @author Claus-Christoph Kuethe
  * @copyright (c) 2020, Claus-Christoph Kuethe
  */
-class ValidateDateException extends ValidateException {
+final class ValidateDateException extends ValidateException {
 	/** If syntax validation fails (ie: wrong format)*/
 	const VD_SYNTAX = 1;
 	/** If days are out of range (31.02.2020) */
@@ -23,7 +23,7 @@ class ValidateDateException extends ValidateException {
  * @author Claus-Christoph Kuethe
  * @copyright (c) 2020, Claus-Christoph Kuethe
  */
-class ValidateDate implements Validate {
+final class ValidateDate implements Validate {
 	/** ISO 8601 compliant date (YYYY-MM-DD) */
 	const ISO = 0;
 	/** Pre 1996 DIN 5008 german date (DD.MM.YYYY)  */
@@ -122,6 +122,7 @@ class ValidateDate implements Validate {
 	 * @return void
 	 * @throws ValidateException
 	 */
+	#[\Override]
 	public function validate(string $validee): void {
 		if(!preg_match($this->regex, $validee)) {
 			throw new ValidateException("Invalid format, ".$this->format." expected", ValidateDateException::VD_SYNTAX);

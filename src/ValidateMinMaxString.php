@@ -7,7 +7,7 @@
  */
 namespace plibv4\validate;
 
-class ValidateMinMaxString implements Validate {
+final class ValidateMinMaxString implements Validate {
 	private int $min;
 	private int $max;
 	private string $charset;
@@ -17,6 +17,7 @@ class ValidateMinMaxString implements Validate {
 		$this->charset = $charset;
 	}
 	
+	#[\Override]
 	public function validate(string $validee): void {
 		if(mb_strlen($validee)<$this->min) {
 			throw new ValidateException(sprintf("value too short, min %d characters.", $this->min));
