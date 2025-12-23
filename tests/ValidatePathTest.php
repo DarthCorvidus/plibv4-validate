@@ -39,6 +39,12 @@ class ValidatePathTest extends TestCase {
 		$this->assertEquals(NULL, $validate->validate(__DIR__."/ValidatePathTest.php"));
 	}
 
+	public function testPathDoesNotExist() {
+		$validate = new ValidatePath(ValidatePath::FILE);
+		$this->expectException(ValidateException::class);
+		$this->assertEquals(NULL, $validate->validate(__DIR__."/ValidatePathTest.phpx"));
+	}
+	
 	/**
 	 * If an invalid format is rejected.
 	 */
