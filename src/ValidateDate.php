@@ -1,5 +1,6 @@
 <?php
 namespace plibv4\validate;
+use InvalidArgumentException;
 use Assert;
 
 /**
@@ -68,10 +69,6 @@ final class ValidateDate implements Validate {
 	 * @return array
 	 */
 	private function stringToArray(string $validee): array {
-		if($this->id===self::ISO) {
-			$exp = explode("-", $validee);
-		return array($exp[0], $exp[1], $exp[2]);
-		}
 		if($this->id==self::GERMAN) {
 			$exp = explode(".", $validee);
 		return array($exp[2], $exp[1], $exp[0]);
@@ -80,8 +77,9 @@ final class ValidateDate implements Validate {
 			$exp = explode("/", $validee);
 		return array($exp[2], $exp[0], $exp[1]);
 		}
-	// should not trip
-	throw new \RuntimeException("unable to parse ".$validee." into array for format ".$this->id);
+		// ISO as default
+		$exp = explode("-", $validee);
+	return array($exp[0], $exp[1], $exp[2]);
 	}
 	/**
 	 * Semantic validation of date as array.
@@ -102,15 +100,20 @@ final class ValidateDate implements Validate {
 			return;
 		}
 		$parseMe = (string)$date[0]."-".(string)$date[1]."-01";
-		$ts = strtotime($parseMe);
-		if($ts === false) {
-			// should not happen.
-			throw new \RuntimeException("unable to parse date ".$parseMe);
-		}
+		$ts = self::strtotime($parseMe);
 		if(date("t", $ts)<$date[2]) {
 			throw new ValidateException("day is out of range", ValidateDateException::VD_DAY_OOR);
 		}
 	}
+	
+	private static function strtotime(string $dateString): int {
+		$ts = strtotime($dateString);
+		if($ts === false) {
+			throw new InvalidArgumentException("unable to parse date ".$dateString);
+		}
+	return $ts;
+	}
+	
 	/**
 	 * Validates string against selected format.
 	 * Validates string containing date against proper syntax for desired format

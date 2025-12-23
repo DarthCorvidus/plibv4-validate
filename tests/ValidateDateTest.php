@@ -25,6 +25,22 @@ class ValidateDateTest extends TestCase {
 		$this->expectException(InvalidArgumentException::class);
 		$validate = new ValidateDate(-1);
 	}
+	
+	function testStringToTimeWrapper() {
+		$reflector = new ReflectionClass(ValidateDate::class);
+		$method = $reflector->getMethod("strtotime");
+		$result = $method->invokeArgs(null, array("1970-01-01"));
+		$this->assertSame(0, $result);
+	}
+
+	function testStringToTimeWrapperInvalid() {
+		$reflector = new ReflectionClass(ValidateDate::class);
+		$method = $reflector->getMethod("strtotime");
+		$this->expectException(InvalidArgumentException::class);
+		$method->invokeArgs(null, array("First of January of Nineteenhundredandseventy"));
+	}
+	
+	
 	/**
 	 * If StringToArray is able to turn an ISO string into an Array.
 	 */
