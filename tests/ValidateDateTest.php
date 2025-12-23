@@ -17,23 +17,23 @@ use InvalidArgumentException;
  *
  * @author hm
  */
-class ValidateDateTest extends TestCase {
+final class ValidateDateTest extends TestCase {
 	/**
 	 * If an invalid format is rejected.
 	 */
-	public function testConstructInvalidFormat() {
+	public function testConstructInvalidFormat(): void {
 		$this->expectException(InvalidArgumentException::class);
-		$validate = new ValidateDate(-1);
+		new ValidateDate(-1);
 	}
 	
-	function testStringToTimeWrapper() {
+	function testStringToTimeWrapper(): void {
 		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("strtotime");
 		$result = $method->invokeArgs(null, array("1970-01-01"));
 		$this->assertSame(0, $result);
 	}
 
-	function testStringToTimeWrapperInvalid() {
+	function testStringToTimeWrapperInvalid(): void {
 		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("strtotime");
 		$this->expectException(InvalidArgumentException::class);
@@ -44,22 +44,24 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * If StringToArray is able to turn an ISO string into an Array.
 	 */
-	public function testStringToArrayIso() {
+	public function testStringToArrayIso(): void {
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("StringToArray");
 		$method->setAccessible(true);
+		/** @psalm-suppress MixedAssignment */
 		$result = $method->invokeArgs($validate, array("2020-05-02"));
 		$this->assertEquals(array("2020", "05", "02"), $result);
 	}
 	/**
 	 * If StringToArray is able to turn a german date into an Array.
 	 */
-	public function testStringToArrayGerman() {
+	public function testStringToArrayGerman(): void {
 		$validate = new ValidateDate(ValidateDate::GERMAN);
 		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("StringToArray");
 		$method->setAccessible(true);
+		/** @psalm-suppress MixedAssignment */
 		$result = $method->invokeArgs($validate, array("02.05.2020"));
 		$this->assertEquals(array("2020", "05", "02"), $result);
 	}
@@ -67,26 +69,28 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * If StringToArray is able to turn a US date into an Array.
 	 */
-	public function testStringToArrayUs() {
+	public function testStringToArrayUs(): void {
 		$validate = new ValidateDate(ValidateDate::US);
 		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("StringToArray");
 		$method->setAccessible(true);
+		/** @psalm-suppress MixedAssignment */
 		$result = $method->invokeArgs($validate, array("05/02/2020"));
 		$this->assertEquals(array("2020", "05", "02"), $result);
 	}
 
-	public function testValidateSemantics() {
+	public function testValidateSemantics(): void {
 		$arrayDate = array("2020", "05", "02");
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
+		/** @psalm-suppress MixedAssignment */
 		$result = $method->invokeArgs($validate, array($arrayDate));
 		$this->assertEquals(NULL, $result);
 	}
 
-	public function testValidateSemanticsMonthZero() {
+	public function testValidateSemanticsMonthZero(): void {
 		$arrayDate = array("2020", "00", "02");
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$reflector = new ReflectionClass(ValidateDate::class);
@@ -97,7 +101,7 @@ class ValidateDateTest extends TestCase {
 		$method->invokeArgs($validate, array($arrayDate));		
 	}
 
-	public function testValidateSemanticsMonthOutOfRange() {
+	public function testValidateSemanticsMonthOutOfRange(): void {
 		$arrayDate = array("2020", "13", "02");
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$reflector = new ReflectionClass(ValidateDate::class);
@@ -108,7 +112,7 @@ class ValidateDateTest extends TestCase {
 		$method->invokeArgs($validate, array($arrayDate));		
 	}
 	
-	public function testValidateSemanticsDayZero() {
+	public function testValidateSemanticsDayZero(): void {
 		$arrayDate = array("2020", "05", "00");
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$reflector = new ReflectionClass(ValidateDate::class);
@@ -119,7 +123,7 @@ class ValidateDateTest extends TestCase {
 		$method->invokeArgs($validate, array($arrayDate));		
 	}
 
-	public function testValidateSemanticsDayOfRange() {
+	public function testValidateSemanticsDayOfRange(): void {
 		$arrayDate = array("2020", "05", "32");
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$reflector = new ReflectionClass(ValidateDate::class);
@@ -130,17 +134,18 @@ class ValidateDateTest extends TestCase {
 		$method->invokeArgs($validate, array($arrayDate));		
 	}
 
-	public function testValidateSemanticsLeap() {
+	public function testValidateSemanticsLeap(): void {
 		$arrayDate = array("2020", "02", "29");
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
+		/** @psalm-suppress MixedAssignment */
 		$result = $method->invokeArgs($validate, array($arrayDate));
 		$this->assertEquals(NULL, $result);
 	}
 
-	public function testValidateSemanticsLeapWrong() {
+	public function testValidateSemanticsLeapWrong(): void {
 		$arrayDate = array("2019", "02", "29");
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$reflector = new ReflectionClass(ValidateDate::class);
@@ -154,7 +159,7 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * Validates "strict" date with leading zeroes
 	 */
-	public function testValidateIsoStrict() {
+	public function testValidateIsoStrict(): void {
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$this->assertEquals(NULL, $validate->validate("2020-05-02"));
 	}
@@ -162,7 +167,7 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * Validates "sloppy" date without leading zeroes
 	 */
-	public function testValidateIsoSloppy() {
+	public function testValidateIsoSloppy(): void {
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$this->assertEquals(NULL, $validate->validate("2020-5-2"));
 	}
@@ -170,7 +175,7 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * Checks if "other" format (german) fails
 	 */
-	public function testValidateIsoGerman() {
+	public function testValidateIsoGerman(): void {
 		$time = new ValidateDate(ValidateDate::ISO);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
@@ -180,7 +185,7 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * Checks if "other" format (US) fails
 	 */
-	public function testValidateIsoUs() {
+	public function testValidateIsoUs(): void {
 		$time = new ValidateDate(ValidateDate::ISO);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
@@ -190,7 +195,7 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * Checks if complete bogus input fails
 	 */
-	public function testValidateIsoBogus() {
+	public function testValidateIsoBogus(): void {
 		$time = new ValidateDate(ValidateDate::ISO);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
@@ -200,7 +205,7 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * Tests if year with bogus fails
 	 */
-	public function testValidateIsoBogusYear() {
+	public function testValidateIsoBogusYear(): void {
 		$time = new ValidateDate(ValidateDate::ISO);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
@@ -208,9 +213,9 @@ class ValidateDateTest extends TestCase {
 	}
 
 	/**
-	 * Tests if empty year fails 
+	 * Tests if empty year fails
 	 */
-	public function testValidateIsoEmptyYear() {
+	public function testValidateIsoEmptyYear(): void {
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
@@ -220,7 +225,7 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * Tests if empty month fails
 	 */
-	public function testValidateIsoEmptyMonth() {
+	public function testValidateIsoEmptyMonth(): void {
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
@@ -230,90 +235,90 @@ class ValidateDateTest extends TestCase {
 	/**
 	 * Tests if empty day fails
 	 */
-	public function testValidateIsoEmptyDay() {
+	public function testValidateIsoEmptyDay(): void {
 		$validate = new ValidateDate(ValidateDate::ISO);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$validate->validate("2020-05-");
 	}
 
-	public function testValidateGermanStrict() {
+	public function testValidateGermanStrict(): void {
 		$validate = new ValidateDate(ValidateDate::GERMAN);
 		$this->assertEquals(NULL, $validate->validate("02.05.2020"));
 	}
 
-	public function testValidateGermanSloppy() {
+	public function testValidateGermanSloppy(): void {
 		$validate = new ValidateDate(ValidateDate::GERMAN);
 		$this->assertEquals(NULL, $validate->validate("2.5.2020"));
 	}
 
-	public function testValidateGermanUs() {
+	public function testValidateGermanUs(): void {
 		$time = new ValidateDate(ValidateDate::GERMAN);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$time->validate("05/02/2020");
 	}
 
-	public function testValidateGermanIso() {
+	public function testValidateGermanIso(): void {
 		$time = new ValidateDate(ValidateDate::GERMAN);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$time->validate("2020-05-02");
 	}
 
-	public function testValidateGermanBogus() {
+	public function testValidateGermanBogus(): void {
 		$time = new ValidateDate(ValidateDate::GERMAN);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$time->validate("Bogus");
 	}
 
-	public function testValidateGermanBogusYear() {
+	public function testValidateGermanBogusYear(): void {
 		$time = new ValidateDate(ValidateDate::GERMAN);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$time->validate("2020a-05-02");
 	}
 
-	public function testValidateGermanEmptyYear() {
+	public function testValidateGermanEmptyYear(): void {
 		$validate = new ValidateDate(ValidateDate::GERMAN);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$validate->validate("02.05.");
 	}
 
-	public function testValidateGermanEmptyMonth() {
+	public function testValidateGermanEmptyMonth(): void {
 		$validate = new ValidateDate(ValidateDate::GERMAN);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$validate->validate("02..2020");
 	}
 
-	public function testValidateGermanEmptyDay() {
+	public function testValidateGermanEmptyDay(): void {
 		$validate = new ValidateDate(ValidateDate::GERMAN);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$validate->validate(".05.2020");
 	}
 
-	public function testValidateUsStrict() {
+	public function testValidateUsStrict(): void {
 		$validate = new ValidateDate(ValidateDate::US);
 		$this->assertEquals(NULL, $validate->validate("05/02/2020"));
 	}
 
-	public function testValidateUsSloppy() {
+	public function testValidateUsSloppy(): void {
 		$validate = new ValidateDate(ValidateDate::US);
 		$this->assertEquals(NULL, $validate->validate("5/2/2020"));
 	}
 
-	public function testValidateUsGerman() {
+	public function testValidateUsGerman(): void {
 		$time = new ValidateDate(ValidateDate::US);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$time->validate("02.05.2020");
 	}
 
-	public function testValidateUsIso() {
+	public function testValidateUsIso(): void {
 		$time = new ValidateDate(ValidateDate::US);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
@@ -321,35 +326,35 @@ class ValidateDateTest extends TestCase {
 	}
 
 	
-	public function testValidateUsBogus() {
+	public function testValidateUsBogus(): void {
 		$time = new ValidateDate(ValidateDate::US);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$time->validate("Bogus");
 	}
 	
-	public function testValidateUsBogusYear() {
+	public function testValidateUsBogusYear(): void {
 		$time = new ValidateDate(ValidateDate::US);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$time->validate("05/02/2020a");
 	}
 
-	public function testValidateUsEmptyYear() {
+	public function testValidateUsEmptyYear(): void {
 		$validate = new ValidateDate(ValidateDate::US);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$validate->validate("05/02/");
 	}
 
-	public function testValidateUsEmptyMonth() {
+	public function testValidateUsEmptyMonth(): void {
 		$validate = new ValidateDate(ValidateDate::US);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);
 		$validate->validate("/02/2020");
 	}
 
-	public function testValidateUsEmptyDay() {
+	public function testValidateUsEmptyDay(): void {
 		$validate = new ValidateDate(ValidateDate::US);
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionCode(ValidateDateException::VD_SYNTAX);

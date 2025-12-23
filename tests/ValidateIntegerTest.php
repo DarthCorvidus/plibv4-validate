@@ -15,34 +15,34 @@ use PHPUnit\Framework\TestCase;
  *
  * @author hm
  */
-class ValidateIntegerTest extends TestCase {
-	function testInteger() {
+final class ValidateIntegerTest extends TestCase {
+	function testInteger(): void {
 		$validate = new ValidateInteger();
 		$this->assertEquals(NULL, $validate->validate("15"));
 	}
 
-	function testFloat() {
+	function testFloat(): void {
 		$validate = new ValidateInteger();
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionMessage("not a valid integer");
 		$validate->validate("19.14");
 	}
 
-	function testCastableFloat() {
+	function testCastableFloat(): void {
 		$validate = new ValidateInteger();
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionMessage("not a valid integer");
 		$validate->validate("19.0");
 	}
 	
-	function testBogus() {
+	function testBogus(): void {
 		$validate = new ValidateInteger();
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionMessage("not a valid integer");
 		$validate->validate("Fifteen");
 	}
 	
-	function testMixedBogus() {
+	function testMixedBogus(): void {
 		$validate = new ValidateInteger();
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionMessage("not a valid integer");

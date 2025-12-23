@@ -9,20 +9,20 @@ use PHPUnit\Framework\TestCase;
  * @author Claus-Christoph Kuethe
  * @copyright (c) 2023, Claus-Christoph Kuethe
  */
-class ValidateEnumTest extends TestCase {
-	function testConstruct() {
+final class ValidateEnumTest extends TestCase {
+	function testConstruct(): void {
 		$validate = new ValidateEnum(array("Hund", "Katze", "Maus"));
 		$this->assertInstanceOf(ValidateEnum::class, $validate);
 	}
 	
-	function testValidateEnumAllowed() {
+	function testValidateEnumAllowed(): void {
 		$validate = new ValidateEnum(array("Hund", "Katze", "Maus"));
 		$this->assertEquals(NULL, $validate->validate("Hund"));
 		$this->assertEquals(NULL, $validate->validate("Katze"));
 		$this->assertEquals(NULL, $validate->validate("Maus"));
 	}
 	
-	function testValidateEnumDisallowed() {
+	function testValidateEnumDisallowed(): void {
 		$validate = new ValidateEnum(array("Hund", "Katze", "Maus"));
 		$this->expectException(ValidateException::class);
 		$this->expectExceptionMessage("Value 'Aaskrähe' not in allowed set {Hund,Katze,Maus}");

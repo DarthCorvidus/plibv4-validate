@@ -10,18 +10,18 @@ use InvalidArgumentException;
  *
  * @author hm
  */
-class ValidateTimeTest extends TestCase {
+final class ValidateTimeTest extends TestCase {
 	/**
 	 * If an invalid limit is rejected
 	 */
-	public function testConstructInvalidFormat() {
+	public function testConstructInvalidFormat(): void {
 		$this->expectException(InvalidArgumentException::class);
-		$validate = new ValidateTime(-1);
+		new ValidateTime(-1);
 	}
 	/**
 	 * If 'strict' time with leading zeroes valid
 	 */
-	public function testValidateStrict() {
+	public function testValidateStrict(): void {
 		$validate = new ValidateTime();
 		$this->assertEquals(NULL, $validate->validate("05:37:01"));
 	}
@@ -29,7 +29,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If 'sloppy' time without leading zeroes valid
 	 */
-	public function testValidateSloppy() {
+	public function testValidateSloppy(): void {
 		$validate = new ValidateTime();
 		$this->assertEquals(NULL, $validate->validate("5:37:1"));
 	}
@@ -37,7 +37,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If time without seconds is valid
 	 */
-	public function testValidateHoursMinutes() {
+	public function testValidateHoursMinutes(): void {
 		$validate = new ValidateTime();
 		$this->assertEquals(NULL, $validate->validate("05:37"));
 
@@ -46,7 +46,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If time without minutes is valid
 	 */
-	public function testValidateHours() {
+	public function testValidateHours(): void {
 		$validate = new ValidateTime();
 		$this->assertEquals(NULL, $validate->validate("05"));
 	}
@@ -54,7 +54,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If complete bogus is rejected
 	 */
-	public function testBogus() {
+	public function testBogus(): void {
 		$time = new ValidateTime();
 		$this->expectException(ValidateException::class);
 		$time->validate("Bogus");
@@ -63,7 +63,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If empty hours (:MM:SS) are rejected
 	 */
-	public function testEmptyHours() {
+	public function testEmptyHours(): void {
 		$time = new ValidateTime();
 		$this->expectException(ValidateException::class);
 		$time->validate(":47:30");
@@ -72,7 +72,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If empty minutes are rejected (HH::SS)
 	 */
-	public function testEmptyMinutes() {
+	public function testEmptyMinutes(): void {
 		$time = new ValidateTime();
 		$this->expectException(ValidateException::class);
 		$time->validate("07::30");
@@ -81,7 +81,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If empty seconds are rejected (HH:MM:)
 	 */
-	public function testEmptySeconds() {
+	public function testEmptySeconds(): void {
 		$time = new ValidateTime();
 		$this->expectException(ValidateException::class);
 		$time->validate("07:47:");
@@ -91,7 +91,7 @@ class ValidateTimeTest extends TestCase {
 	 * If out of range hours are rejected (only if limit is set to 
 	 * ValidateTime::DAY)
 	 */
-	public function testHoursOutOfRange() {
+	public function testHoursOutOfRange(): void {
 		$validate = new ValidateTime(ValidateTime::DAY);
 		$this->expectException(ValidateException::class);
 		$validate->validate("25");
@@ -101,7 +101,7 @@ class ValidateTimeTest extends TestCase {
 	 * If out of range hours are allowed (only if limit is set to 
 	 * ValidateTime::UNLIMITED)
 	 */
-	public function testHoursUnlimited() {
+	public function testHoursUnlimited(): void {
 		$validate = new ValidateTime(ValidateTime::UNLIMITED);
 		$this->assertEquals(NULL, $validate->validate("125:02:47"));
 	}
@@ -109,7 +109,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If out of range minutes are rejected (always)
 	 */
-	public function testMinutesOutOfRange() {
+	public function testMinutesOutOfRange(): void {
 		$validate = new ValidateTime();
 		$this->expectException(ValidateException::class);
 		$validate->validate("22:60");
@@ -118,7 +118,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If out of range seconds are rejected (always)
 	 */
-	public function testSecondsOutOfRange() {
+	public function testSecondsOutOfRange(): void {
 		$validate = new ValidateTime();
 		$this->expectException(ValidateException::class);
 		$validate->validate("22:39:72");
@@ -127,7 +127,7 @@ class ValidateTimeTest extends TestCase {
 	/**
 	 * If too many segments are rejected (??:HH:MM:SS)
 	 */
-	public function testTooMany() {
+	public function testTooMany(): void {
 		$validate = new ValidateTime();
 		$this->expectException(ValidateException::class);
 		$validate->validate("17:22:39:72");
