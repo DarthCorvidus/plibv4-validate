@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
+
+namespace plibv4\validate;
 use PHPUnit\Framework\TestCase;
+
 /**
  * Unit Test for ValidateMinMax
  * 

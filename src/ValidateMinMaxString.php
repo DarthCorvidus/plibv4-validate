@@ -5,6 +5,8 @@
  * @author Claus-Christoph Kuethe
  * @copyright (c) 2023, Claus-Christoph Kuethe
  */
+namespace plibv4\validate;
+
 class ValidateMinMaxString implements Validate {
 	private int $min;
 	private int $max;

@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
+
+namespace plibv4\validate;
 use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
+use Assert;
+
 class ValidatePathTest extends TestCase {
 	public function testBothFile() {
 		$validate = new ValidatePath(ValidatePath::BOTH);

@@ -1,4 +1,7 @@
 <?php
+namespace plibv4\validate;
+use Assert;
+
 /**
  * Exception if ValidateDate fails.
  * 

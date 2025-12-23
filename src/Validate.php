@@ -1,5 +1,5 @@
 <?php
-
+namespace plibv4\validate;
 /**
  * Validate is an interface for a class that is supposed to validate strings,
  * which come from user input or other sources like command line arguments,

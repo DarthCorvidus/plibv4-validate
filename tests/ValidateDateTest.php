@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
+
+namespace plibv4\validate;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use InvalidArgumentException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,7 +30,7 @@ class ValidateDateTest extends TestCase {
 	 */
 	public function testStringToArrayIso() {
 		$validate = new ValidateDate(ValidateDate::ISO);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("StringToArray");
 		$method->setAccessible(true);
 		$result = $method->invokeArgs($validate, array("2020-05-02"));
@@ -37,7 +41,7 @@ class ValidateDateTest extends TestCase {
 	 */
 	public function testStringToArrayGerman() {
 		$validate = new ValidateDate(ValidateDate::GERMAN);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("StringToArray");
 		$method->setAccessible(true);
 		$result = $method->invokeArgs($validate, array("02.05.2020"));
@@ -49,7 +53,7 @@ class ValidateDateTest extends TestCase {
 	 */
 	public function testStringToArrayUs() {
 		$validate = new ValidateDate(ValidateDate::US);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("StringToArray");
 		$method->setAccessible(true);
 		$result = $method->invokeArgs($validate, array("05/02/2020"));
@@ -59,7 +63,7 @@ class ValidateDateTest extends TestCase {
 	public function testValidateSemantics() {
 		$arrayDate = array("2020", "05", "02");
 		$validate = new ValidateDate(ValidateDate::ISO);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
 		$result = $method->invokeArgs($validate, array($arrayDate));
@@ -69,7 +73,7 @@ class ValidateDateTest extends TestCase {
 	public function testValidateSemanticsMonthZero() {
 		$arrayDate = array("2020", "00", "02");
 		$validate = new ValidateDate(ValidateDate::ISO);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
 		$this->expectException(ValidateException::class);
@@ -80,7 +84,7 @@ class ValidateDateTest extends TestCase {
 	public function testValidateSemanticsMonthOutOfRange() {
 		$arrayDate = array("2020", "13", "02");
 		$validate = new ValidateDate(ValidateDate::ISO);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
 		$this->expectException(ValidateException::class);
@@ -91,7 +95,7 @@ class ValidateDateTest extends TestCase {
 	public function testValidateSemanticsDayZero() {
 		$arrayDate = array("2020", "05", "00");
 		$validate = new ValidateDate(ValidateDate::ISO);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
 		$this->expectException(ValidateException::class);
@@ -102,7 +106,7 @@ class ValidateDateTest extends TestCase {
 	public function testValidateSemanticsDayOfRange() {
 		$arrayDate = array("2020", "05", "32");
 		$validate = new ValidateDate(ValidateDate::ISO);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
 		$this->expectException(ValidateException::class);
@@ -113,7 +117,7 @@ class ValidateDateTest extends TestCase {
 	public function testValidateSemanticsLeap() {
 		$arrayDate = array("2020", "02", "29");
 		$validate = new ValidateDate(ValidateDate::ISO);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
 		$result = $method->invokeArgs($validate, array($arrayDate));
@@ -123,7 +127,7 @@ class ValidateDateTest extends TestCase {
 	public function testValidateSemanticsLeapWrong() {
 		$arrayDate = array("2019", "02", "29");
 		$validate = new ValidateDate(ValidateDate::ISO);
-		$reflector = new ReflectionClass("ValidateDate");
+		$reflector = new ReflectionClass(ValidateDate::class);
 		$method = $reflector->getMethod("validateSemantics");
 		$method->setAccessible(true);
 		$this->expectException(ValidateException::class);

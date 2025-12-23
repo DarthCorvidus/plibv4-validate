@@ -1,5 +1,5 @@
 <?php
-
+namespace plibv4\validate;
 /**
  * ValidateArray
  * 

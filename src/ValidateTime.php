@@ -7,6 +7,9 @@
  * @author Claus-Christoph Küthe
  * @copyright (c) 2020, Claus-Christoph Küthe
  */
+namespace plibv4\validate;
+use Assert;
+
 class ValidateTime implements Validate {
 	/** Allows for values that exceed 23:59:59 */
 	const UNLIMITED = 1;

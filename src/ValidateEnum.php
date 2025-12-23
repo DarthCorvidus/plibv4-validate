@@ -5,6 +5,8 @@
  * @author Claus-Christoph Kuethe
  * @copyright (c) 2023, Claus-Christoph Kuethe
  */
+namespace plibv4\validate;
+
 class ValidateEnum implements Validate {
 	/** @var list<string> */
 	private array $enum = array();
