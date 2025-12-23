@@ -5,7 +5,7 @@
  * @license LGPL
  */
 namespace plibv4\validate;
-use Assert;
+use plibv4\assert\Assert;
 
 /**
  * Validate path

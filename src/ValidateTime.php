@@ -8,7 +8,7 @@
  * @copyright (c) 2020, Claus-Christoph Küthe
  */
 namespace plibv4\validate;
-use Assert;
+use plibv4\assert\Assert;
 
 final class ValidateTime implements Validate {
 	/** Allows for values that exceed 23:59:59 */
