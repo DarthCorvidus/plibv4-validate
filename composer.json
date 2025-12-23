@@ -1,5 +1,6 @@
 {
 	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"repositories": [
 		{
 			"type": "vcs",
@@ -24,9 +25,6 @@
 		"psalm": "./vendor/bin/psalm --show-info=true --no-cache"
 	},
 	"config": {
-		"platform": {
-			"php": "8.2"
-		},
 		"allow-plugins": {
 			"symfony/flex": false
 		}
