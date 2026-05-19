@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/DarthCorvidus/plibv4-assert",
-                "reference": "5342cdcd3779a0df11d19b1b472a8848347eb9b1"
+                "reference": "6dc2c9b004499b9e57e1477261d4bdd7a6b3fbeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DarthCorvidus/plibv4-assert/zipball/5342cdcd3779a0df11d19b1b472a8848347eb9b1",
-                "reference": "5342cdcd3779a0df11d19b1b472a8848347eb9b1",
+                "url": "https://api.github.com/repos/DarthCorvidus/plibv4-assert/zipball/6dc2c9b004499b9e57e1477261d4bdd7a6b3fbeb",
+                "reference": "6dc2c9b004499b9e57e1477261d4bdd7a6b3fbeb",
                 "shasum": ""
             },
             "require-dev": {
@@ -42,7 +42,7 @@
                     "./vendor/bin/psalm --show-info=true --no-cache"
                 ]
             },
-            "time": "2026-01-28T19:08:26+00:00"
+            "time": "2026-05-18T19:13:48+00:00"
         }
     ],
     "packages-dev": [
