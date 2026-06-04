@@ -19,7 +19,7 @@ final class ValidatePath implements Validate {
 	const BOTH = 3;
 	/**
 	 * Construct ValidatePath
-	 * @param int $format directory, file or both
+	 * @param int $type directory, file or both
 	 */
 	function __construct(int $type) {
 		Assert::isClassConstant(self::class, $type, "type");
