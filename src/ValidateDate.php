@@ -6,7 +6,7 @@ use InvalidArgumentException;
 /**
  * Exception if ValidateDate fails.
  * 
- * Class constants can be used to mesfinal sage cause of failure to catch block.
+ * Class constants can be used to identify the cause of failure to catch blocks.
  * @author Claus-Christoph Kuethe
  * @copyright (c) 2020, Claus-Christoph Kuethe
  */
