@@ -11,6 +11,9 @@ namespace plibv4\validate;
 use plibv4\assert\Assert;
 
 final class ValidateTime implements Validate {
+	const MAX_HOURS = 23;
+	const MAX_MINUTES = 59;
+	const MAX_SECONDS = 59;
 	/** Allows for values that exceed 23:59:59 */
 	const UNLIMITED = 1;
 	/** Restricts values to 23:59:59 */
@@ -58,13 +61,18 @@ final class ValidateTime implements Validate {
 	 */
 	private function validateSemantics(string $validee): void {
 		$exp = explode(":", $validee);
-		if($exp[0]>23 && $this->limit==self::DAY) {
+		$field = [];
+		foreach($exp as $key => $value) {
+			$field[] = (int)$value;
+		}
+
+		if($field[0]>self::MAX_HOURS && $this->limit == self::DAY) {
 			throw new ValidateException("hours out of range");
 		}
-		if(isset($exp[1]) && $exp[1]>59) {
+		if(isset($field[1]) && $field[1]>self::MAX_MINUTES) {
 			throw new ValidateException("minutes out of range");
 		}
-		if(isset($exp[2]) && $exp[2]>59) {
+		if(isset($field[2]) && $field[2]>self::MAX_SECONDS) {
 			throw new ValidateException("seconds out of range");
 		}
 	}
