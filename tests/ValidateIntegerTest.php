@@ -18,8 +18,22 @@ use PHPUnit\Framework\TestCase;
 final class ValidateIntegerTest extends TestCase {
 	function testInteger(): void {
 		$validate = new ValidateInteger();
-		$this->assertEquals(NULL, $validate->validate("15"));
+		$this->assertEquals(null, $validate->validate("15"));
+		$this->assertEquals(null, $validate->validate("-15"));
 	}
+
+	function testNegativeInteger(): void {
+		$validate = new ValidateInteger();
+		$this->assertEquals(null, $validate->validate("-15"));
+	}
+
+	function testOnlyPositive(): void {
+		$validate = new ValidateInteger(false);
+		$this->expectExceptionMessage("not a valid positive integer");
+		$this->assertEquals(null, $validate->validate("-15"));
+	}
+
+
 
 	function testFloat(): void {
 		$validate = new ValidateInteger();
