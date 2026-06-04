@@ -21,8 +21,7 @@ final class ValidateEnum implements Validate {
 	#[\Override]
 	public function validate(string $validee): void {
 		if(!in_array($validee, $this->enum, true)) {
-			/** @psalm-suppress MixedArgumentTypeCoercion */
-			throw new ValidateDateException(sprintf("Value '%s' not in allowed set {%s}", $validee, implode(",", $this->enum)));
+			throw new ValidateException(sprintf("Value '%s' not in allowed set {%s}", $validee, implode(",", $this->enum)));
 		}
 	}
 }
