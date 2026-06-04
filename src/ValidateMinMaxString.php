@@ -19,14 +19,12 @@ final class ValidateMinMaxString implements Validate {
 	
 	#[\Override]
 	public function validate(string $validee): void {
-		if(mb_strlen($validee)<$this->min) {
+		if(mb_strlen($validee, $this->charset)<$this->min) {
 			throw new ValidateException(sprintf("value too short, min %d characters.", $this->min));
 		}
 		
 		if(mb_strlen($validee)>$this->max) {
 			throw new ValidateException(sprintf("value too long, max %d characters.", $this->max));
 		}
-			
 	}
-
 }
