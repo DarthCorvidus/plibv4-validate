@@ -23,7 +23,7 @@ final class ValidateMinMaxString implements Validate {
 			throw new ValidateException(sprintf("value too short, min %d characters.", $this->min));
 		}
 		
-		if(mb_strlen($validee)>$this->max) {
+		if(mb_strlen($validee, $this->charset)>$this->max) {
 			throw new ValidateException(sprintf("value too long, max %d characters.", $this->max));
 		}
 	}
