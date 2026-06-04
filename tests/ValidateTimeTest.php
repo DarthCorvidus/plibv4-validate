@@ -97,6 +97,13 @@ final class ValidateTimeTest extends TestCase {
 		$validate->validate("25");
 	}
 
+	public function testHoursFullDay(): void {
+		$validate = new ValidateTime(ValidateTime::DAY);
+		$this->assertEquals(null, $validate->validate("24"));
+		$this->assertEquals(null, $validate->validate("24:00"));
+		$this->assertEquals(null, $validate->validate("24:00:00"));
+	}
+
 	/**
 	 * If out of range hours are allowed (only if limit is set to 
 	 * ValidateTime::UNLIMITED)

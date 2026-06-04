@@ -38,11 +38,13 @@ final class ValidateTime implements Validate {
 	#[\Override]
 	function validate(string $validee): void {
 		if(preg_match("/^[0-9]+$/", $validee)) {
-			$this->validateSemantics($validee);
+			$pad = $validee.":00:00";
+			$this->validateSemantics($pad);
 		return;
 		}
 		if(preg_match("/^[0-9]+:[0-9]{1,2}$/", $validee)) {
-			$this->validateSemantics($validee);
+			$pad = $validee.":00";
+			$this->validateSemantics($pad);
 		return;
 		}
 		if(preg_match("/^[0-9]+:[0-9]{1,2}:[0-9]{1,2}$/", $validee)) {
@@ -65,14 +67,17 @@ final class ValidateTime implements Validate {
 		foreach($exp as $key => $value) {
 			$field[] = (int)$value;
 		}
+		if($field === [24, 0, 0]) {
+			return;
+		}
 
 		if($field[0]>self::MAX_HOURS && $this->limit == self::DAY) {
 			throw new ValidateException("hours out of range");
 		}
-		if(isset($field[1]) && $field[1]>self::MAX_MINUTES) {
+		if($field[1]>self::MAX_MINUTES) {
 			throw new ValidateException("minutes out of range");
 		}
-		if(isset($field[2]) && $field[2]>self::MAX_SECONDS) {
+		if($field[2]>self::MAX_SECONDS) {
 			throw new ValidateException("seconds out of range");
 		}
 	}
