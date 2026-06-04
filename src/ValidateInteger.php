@@ -1,4 +1,9 @@
 <?php
+/**
+ * @copyright (c) 2023, Claus-Christoph Küthe
+ * @author Claus-Christoph Küthe <floss@vm01.telton.de>
+ * @license LGPL
+ */
 namespace plibv4\validate;
 final class ValidateInteger implements Validate {
 	private bool $allowNegative = true;
@@ -10,10 +15,10 @@ final class ValidateInteger implements Validate {
 		/**
 		 * 
 		 */
-		if(preg_match("/^[0-9]*$/", $validee)) {
+		if(preg_match("/^[0-9]+$/", $validee)) {
 			return;
 		}
-		if($this->allowNegative && preg_match("/^-[0-9]*$/", $validee)) {
+		if($this->allowNegative && preg_match("/^-([0-9]+)$/", $validee)) {
 			return;
 		}
 		if(!$this->allowNegative) {

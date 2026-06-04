@@ -1,4 +1,9 @@
 <?php
+/**
+ * @copyright (c) 2023, Claus-Christoph Küthe
+ * @author Claus-Christoph Küthe <floss@vm01.telton.de>
+ * @license LGPL
+ */
 declare(strict_types=1);
 
 namespace plibv4\validate;
@@ -33,7 +38,17 @@ final class ValidateIntegerTest extends TestCase {
 		$this->assertEquals(null, $validate->validate("-15"));
 	}
 
+	function testEmpty(): void {
+		$validate = new ValidateInteger(false);
+		$this->expectExceptionMessage("not a valid positive integer");
+		$this->assertEquals(null, $validate->validate(""));
+	}
 
+	function testEmptyNegative(): void {
+		$validate = new ValidateInteger(true);
+		$this->expectExceptionMessage("not a valid integer");
+		$this->assertEquals(null, $validate->validate("-"));
+	}
 
 	function testFloat(): void {
 		$validate = new ValidateInteger();
