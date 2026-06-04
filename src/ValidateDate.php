@@ -91,7 +91,7 @@ final class ValidateDate implements Validate {
 	 */
 	private function validateSemantics(array $date) {
 		if($date[1]<=0 || $date[1]>=13) {
-			throw new ValidateException("Month is out of range", ValidateDateException::VD_MONTH_OOR);
+			throw new ValidateException("month is out of range", ValidateDateException::VD_MONTH_OOR);
 		}
 		if($date[2]<=0) {
 			throw new ValidateException("day is out of range", ValidateDateException::VD_DAY_OOR);
